@@ -1,0 +1,8 @@
+# IntelliJ project files
+.idea
+
+# Jupyter
+.ipynb_checkpoints
+
+# MacOS
+.DS_Store
