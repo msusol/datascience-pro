@@ -145,8 +145,8 @@ Google's Colab will let you connect to a local runtime. This allows you to
 execute code on your local hardware using the Colab UI at
 [colab.research.google.com](https://colab.research.google.com).
 
-The only change to the command above it to modify `--NotebookApp.
-allow_origin` to permit Colab to access your local kernels.
+The only change to the command above it to modify `--NotebookApp.allow_origin`
+to permit Colab to access your local kernels.
 
 ```shell
 % jupyter notebook \
@@ -305,15 +305,6 @@ Install the `rpy2` package, which allows Python to talk to R. You can use
 % pip3 install -U rpy2
 ```
 
-> **NOTE:** You may need to set the environmental variable `R_HOME` in a python
-> code block once before running the `rpy2` colab below.
->
->```python
->import os
->
->os.environ['R_HOME'] = '/Library/Frameworks/R.framework/Resources'
->```
-
 Each time you start a new notebook you'll need to load `rpy2` as an extension:
 
 ```
@@ -333,6 +324,15 @@ R.version.string
 **DEMO:** Now, let's look at a simple example of using python to load a 
 csv file into a dataframe (`df`), and then pass it over to `R` to then use 
 directly in `ggplot`.
+
+> **NOTE:** You may need to set the environmental variable `R_HOME` in a python
+> code block once before running the `rpy2` colab.
+>
+>```python
+>import os
+>
+>os.environ['R_HOME'] = '/Library/Frameworks/R.framework/Resources'
+>```
 
 ![rpy2-demo](images/rpy2-demo.png)
 
