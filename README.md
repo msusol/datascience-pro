@@ -336,9 +336,10 @@ directly in `ggplot`.
 
 ![rpy2-demo](images/rpy2-demo.png)
 
-Try
-the [rpy2 on Colab notebook](https://colab.research.google.com/github/msusol/jupyter-notebook-on-macos/blob/main/rpy2.ipynb)
-for yourself. Colab already has `rpy2` installed in its basic 'hosted' runtime.
+Try our
+[rpy2 notebook](https://colab.research.google.com/github/msusol/jupyter-notebook-on-macos/blob/main/rpy2.ipynb)
+on Colab for yourself. BTW, Colab already has `rpy2` installed in its basic 
+'hosted' runtime.
 
 ## References
 
