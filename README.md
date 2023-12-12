@@ -103,7 +103,7 @@ launch Jupyter now:
 
 ```shell
 % jupyter notebook \
-  --NotebookApp.allow_origin='*' \
+  --NotebookApp.allow_origin='' \
   --port=8889 \
   --notebook-dir='/Users/marksusol/DataScience/' \
   --allow-root \
@@ -112,8 +112,11 @@ launch Jupyter now:
   --NotebookApp.port_retries=0 > /tmp/jupyter.log 2>&1
 ```
 
-> **NOTE:** I purposely chose to use a non-default `port=8889` as often another 
+> **port:** I purposely chose to use a non-default `port=8889` as often another 
 > process will try to use `port=8888`, so I avoid the port collision this way.
+> 
+> **allow_origin:** Don't use `'*'` to allow any origin to access your server.
+
 
 In the event, you close the Terminal window from which you launched Jupyter 
 and need to shut it down, you will need to find the process ID for the job 
@@ -141,6 +144,9 @@ directly from a notebook.
 Google's Colab will let you connect to a local runtime. This allows you to 
 execute code on your local hardware using the Colab UI at
 [colab.research.google.com](https://colab.research.google.com).
+
+The only change to the command above it to modify `--NotebookApp.
+allow_origin` to permit Colab to access your local kernels.
 
 ```shell
 % jupyter notebook \
@@ -271,7 +277,7 @@ Available kernels:
 
 Google's Colab will also now pick up on the different local kernels 
 available when you connect to your local runtime. So you can build python 
-and/or colab notebooks for datascience projects in your drive account.
+and/or `R` colab notebooks for datascience projects in your drive account.
 
 ![colab-r-kernel](images/colab-r-kernel.png)
 
@@ -293,11 +299,20 @@ prefer to run, i.e., data mining. So how can we pass the resulting ETL to an
 `R` package?
 
 Install the `rpy2` package, which allows Python to talk to R. You can use
-pip to install it:
+`pip` to install it:
 
 ```shell
 % pip3 install -U rpy2
 ```
+
+> **NOTE:** You may need to set the environmental variable `R_HOME` in a python
+> code block once before running the `rpy2` colab below.
+>
+>```python
+>import os
+>
+>os.environ['R_HOME'] = '/Library/Frameworks/R.framework/Resources'
+>```
 
 Each time you start a new notebook you'll need to load `rpy2` as an extension:
 
@@ -315,21 +330,15 @@ R.version.string
 [1] "R version 4.3.2 (2023-10-31)"
 ```
 
-![rpy2-demo](images/rpy2-demo.png)
+**DEMO:** Now, let's look at a simple example of using python to load a 
+csv file into a dataframe (`df`), and then pass it over to `R` to then use 
+directly in `ggplot`.
 
-> **NOTE:** You may need to set the environmental variable `R_HOME` in a python
-> code block once before running the `rpy2` colab.
->
->```python
->import os
->
->os.environ['R_HOME'] = '/Library/Frameworks/R.framework/Resources'
->```
->
+![rpy2-demo](images/rpy2-demo.png)
 
 Try
 the [rpy2 on Colab notebook](https://colab.research.google.com/github/msusol/jupyter-notebook-on-macos/blob/main/rpy2.ipynb)
-for yourself.
+for yourself. Colab already has `rpy2` installed in its basic 'hosted' runtime.
 
 ## References
 
