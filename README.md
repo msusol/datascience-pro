@@ -117,7 +117,6 @@ launch Jupyter now:
 > 
 > **allow_origin:** Don't use `'*'` to allow any origin to access your server.
 
-
 In the event, you close the Terminal window from which you launched Jupyter 
 and need to shut it down, you will need to find the process ID for the job 
 and kill it directly.
@@ -189,11 +188,20 @@ jupyter notebook \
   --NotebookApp.port_retries=0 > /tmp/jupyter.log 2>&1;
 ```
 
-Now, in your terminal of choice run the shell command as follows:
+Now, in your terminal of choice, run the shell command as follows:
 
 ```shell
 % sh jupyter_notebook.sh
 ```
+
+> **_SUGGEST:_** Create an alias to call your script from anywhere.
+>
+> ```shell
+> ~ % echo "alias jupyter_notebook.sh='sh \
+> /Users/marksusol/DataScience/GitHub/msusol/jupyter-notebook-on-macos/jupyter_notebook.sh'" >> ~/.zshrc
+> ~ % source ~/.zshrc
+> ~ % jupyter_notebook.sh
+> ```
 
 ### Automator (WIP)
 
