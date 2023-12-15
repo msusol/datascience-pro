@@ -35,10 +35,10 @@ You should now have `python3` alias pointing at the installed 3.xx python
 binaries:
 
 ```shell
-% which python3
+$ which python3
 /Library/Frameworks/Python.framework/Versions/3.11/bin/python3
 
-% python3
+$ python3
 Python 3.11.7 (v3.11.7:fa7a6f2303, Dec  4 2023, 15:22:56) [Clang 13.0.0 (clang-1300.0.29.30)] on darwin
 Type "help", "copyright", "credits" or "license" for more information.
 >>>
@@ -50,7 +50,7 @@ process?). I came across this error when running the
 [rpy2 demo](#r-and-python-rpy2) on Colab below.
 
 ```shell
-% /Applications/Python\ 3.11/Install\ Certificates.command ; exit;
+$ /Applications/Python\ 3.11/Install\ Certificates.command ; exit;
 ```
 
 #### Upgrade Pip
@@ -59,9 +59,9 @@ Almost always is the case that you will need to upgrade pip after installing
 python, so do this by default now.
 
 ```shell
-% pip3 install -U pip
+$ pip3 install -U pip
 
-% pip3 list | grep "pip"
+$ pip3 list | grep "pip"
 Package                       Version
 ----------------------------- ----------   
 pip                           23.3.1
@@ -70,8 +70,8 @@ pip                           23.3.1
 Ensure at this point that you find the following:
 
 ```shell
-% which pip3
-% which python3
+$ which pip3
+$ which python3
 
 /Library/Frameworks/Python.framework/Versions/3.11/bin/pip3
 /Library/Frameworks/Python.framework/Versions/3.11/bin/python3
@@ -92,9 +92,9 @@ Installing Jupyter is a pretty simple process, just use `pip` to install,
 and launch directly:
 
 ```shell
-% pip3 install -U jupyter
+$ pip3 install -U jupyter
 
-% jupyter notebook
+$ jupyter notebook
 ```
 
 We can customize the notebook config to use a specific directory, and even 
@@ -102,7 +102,7 @@ set which port we intend to launch Jupyter on. Use the following command to
 launch Jupyter now:
 
 ```shell
-% jupyter notebook \
+$ jupyter notebook \
   --NotebookApp.allow_origin='' \
   --port=8889 \
   --notebook-dir='/Users/marksusol/DataScience/' \
@@ -122,7 +122,7 @@ and need to shut it down, you will need to find the process ID for the job
 and kill it directly.
 
 ```shell
-% lsof -t -i:8889 | xargs kill -9
+$ lsof -t -i:8889 | xargs kill -9
 ```
 
 Create a new notebook in Jupyter, and in a code block ensure that Jupyter is in fact running off our Python-dot-org Python as
@@ -148,7 +148,7 @@ The only change to the command above it to modify `--NotebookApp.allow_origin`
 to permit Colab to access your local kernels.
 
 ```shell
-% jupyter notebook \
+$ jupyter notebook \
   --NotebookApp.allow_origin='https://colab.research.google.com' \
   --port=8889 \
   --notebook-dir='/Users/marksusol/DataScience/' \
@@ -191,16 +191,16 @@ jupyter notebook \
 Now, in your terminal of choice, run the shell command as follows:
 
 ```shell
-% sh jupyter_notebook.sh
+$ sh jupyter_notebook.sh
 ```
 
 > **_SUGGEST:_** Create an alias to call your script from anywhere.
 >
 > ```shell
-> ~ % echo "alias jupyter_notebook.sh='sh \
+> ~ $ echo "alias jupyter_notebook.sh='sh \
 > /Users/marksusol/DataScience/GitHub/msusol/jupyter-notebook-on-macos/jupyter_notebook.sh'" >> ~/.zshrc
-> ~ % source ~/.zshrc
-> ~ % jupyter_notebook.sh
+> ~ $ source ~/.zshrc
+> ~ $ jupyter_notebook.sh
 > ```
 
 ### Automator (WIP)
@@ -234,10 +234,10 @@ The Scientific Python Development Environment | Spyder-IDE.org
 Install the IDE and open from terminal:
 
 ```shell
-% pip3 install -U spyder
-% pip3 install -U spyder-notebook
+$ pip3 install -U spyder
+$ pip3 install -U spyder-notebook
 
-% spyder
+$ spyder
 ```
 
 The Spyder app will run but be title 'Python' instead.
@@ -267,14 +267,14 @@ Run the code below from the command line to install the `IRkernel` for
 Jupyter. It starts up R, installs the adapter between Jupyter and R (a kernel), and then exits.
 
 ```shell
-% R -e "install.packages('IRkernel', repos = 'http://cran.us.r-project.org');IRkernel::installspec()"
+$ R -e "install.packages('IRkernel', repos = 'http://cran.us.r-project.org');IRkernel::installspec()"
 ```
 
 Now when you open Jupyter you can create new R notebooks, and even switch 
 between kernels!
 
 ```shell
-% jupyter kernelspec list 
+$ jupyter kernelspec list 
 ...
 Available kernels:
   ir         /Users/marksusol/Library/Jupyter/kernels/ir
@@ -310,12 +310,12 @@ Install the `rpy2` package, which allows Python to talk to R. You can use
 `pip` to install it:
 
 ```shell
-% pip3 install -U rpy2
+$ pip3 install -U rpy2
 ```
 
 Each time you start a new notebook you'll need to load `rpy2` as an extension:
 
-```
+```text
 %load_ext rpy2.ipython
 ```
 
@@ -336,11 +336,11 @@ directly in `ggplot`.
 > **NOTE:** You may need to set the environmental variable `R_HOME` in a python
 > code block once before running the `rpy2` colab.
 >
->```python
->import os
+> ```python
+> import os
 >
->os.environ['R_HOME'] = '/Library/Frameworks/R.framework/Resources'
->```
+> os.environ['R_HOME'] = '/Library/Frameworks/R.framework/Resources'
+> ```
 
 ![rpy2-demo](images/rpy2-demo.png)
 
