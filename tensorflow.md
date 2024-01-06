@@ -302,15 +302,16 @@ TODO: Expand on this when Build Tensorflow is working.
 
 ```python
 import tensorflow as tf
-import tensorflow as tf
+#import tensorflow_text as text
 import platform
 
 print(f"Python Platform: {platform.platform()}")
-print(f"Tensor Flow Version: {tf.__version__}")
+print(f"Tensor Flow: v{tf.__version__}")
+#print(f"Tensor Flow Text: v{text.__version__}")
 
 tf.config.list_physical_devices('GPU')
 
 Python Platform: macOS-14.2.1-arm64-arm-64bit
-Tensor Flow Version: 2.15.0
+Tensor Flow: v2.15.0
 [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
 ```
