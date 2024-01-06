@@ -232,7 +232,7 @@ tensorflow-io-gcs-filesystem 0.35.0
 ```
 
 TODO: Find out how to explicitly set this for `cp311`, if it matters.
-https://github.com/bazelbuild/bazel/issues TODO: Add issue url when created.
+https://github.com/bazelbuild/bazel/issues/20779
 
 > Doesn't work of course.
 > `ERROR: tensorflow-2.15.0-cp310-cp310-macosx_11_0_arm64.whl is not a 
