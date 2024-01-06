@@ -293,3 +293,17 @@ Run python, import tensorflow and tensorflow_text…then profit?
 Like I mentioned above, if you want to bypass all this razzmatazz and just download the wheels, go to my Google Drive and download away.
 
 I also want to give credit to TeoZosa for his repo here. This didn’t quite work for me, but it gave me some ideas and helped me figure some things out.
+
+## GPU Support
+
+TODO: Expand on this when Build Tensorflow is working.
+
+> pip install tensorflow-metal==0.6.0
+
+```python
+import tensorflow as tf
+
+tf.config.list_physical_devices('GPU')
+
+[PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+```
