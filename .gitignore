@@ -6,3 +6,8 @@
 
 # MacOS
 .DS_Store
+
+# TensorFlow Wheels > 100 MB
+/dist/tensorflow-2.15.0-cp311-cp311-macosx_14_0_arm64.whl
+/dist/tensorflow_io_gcs_filesystem-0.34.0-cp311-cp311-macosx_14_0_universal2.whl
+/dist/tensorflow_text-2.15.0-cp311-cp311-macosx_11_0_arm64.whl
