@@ -20,6 +20,10 @@ tensorflow-text              2.15.0
 
 ## Git LFS
 
+ref: [Configuring Git Large File Storage](https://docs.github.com/en/repositories/working-with-files/managing-large-files/configuring-git-large-file-storage)
+
+### Install
+
 ```shell
 ~ % sudo port install git-lfs
 ~ % sudo port load rsync
@@ -32,11 +36,20 @@ Updated Git hooks.
 Git LFS initialized.
 ```
 
+### Git Commit
+
+To commit the `whl` files that exceed 100 MB, we need to use `git lfs`.
+
+Track, add, and commit as follows:
+
 ```shell
 ~ % cd dist
 dist % git lfs track "*.whl"
 Tracking "*.whl"
 
-dist % git add 'tensorflow*.whl'
+# `.whl` files already copied to this directory.
+dist % git add tensorflow*.whl
 dist % git commit -m 'tensorflow*.whl files added'
 ```
+
+![git-lts-whl-files](../images/git-lts-whl-files.png)
