@@ -51,5 +51,3 @@ Tracking "*.whl"
 dist % git add tensorflow*.whl
 dist % git commit -m 'tensorflow*.whl files added'
 ```
-
-![git-lts-whl-files](../images/git-lts-whl-files.png)
