@@ -197,10 +197,10 @@ $ sh jupyter_notebook.sh
 > **_SUGGEST:_** Create an alias to call your script from anywhere.
 >
 > ```shell
-> ~ $ echo "alias jupyter_notebook.sh='sh \
+> ~ % echo "alias jupyter_notebook.sh='sh \
 > /Users/marksusol/DataScience/GitHub/msusol/jupyter-notebook-on-macos/jupyter_notebook.sh'" >> ~/.zshrc
-> ~ $ source ~/.zshrc
-> ~ $ jupyter_notebook.sh
+> ~ % source ~/.zshrc
+> ~ % jupyter_notebook.sh
 > ```
 
 ### Automator (WIP)
@@ -345,7 +345,7 @@ directly in `ggplot`.
 ![rpy2-demo](images/rpy2-demo.png)
 
 Try our
-[rpy2 notebook](https://colab.research.google.com/github/msusol/jupyter-notebook-on-macos/blob/main/rpy2.ipynb)
+[rpy2 notebook](https://colab.research.google.com/github/msusol/jupyter-notebook-on-macos/blob/main/notebooks/rpy2.ipynb)
 on Colab for yourself. BTW, Colab already has `rpy2` installed in its basic 
 'hosted' runtime.
 
@@ -354,8 +354,69 @@ on Colab for yourself. BTW, Colab already has `rpy2` installed in its basic
 1. [Top programming languages for data scientists in 2023](https://www.datacamp.com/blog/top-programming-languages-for-data-scientists-in-2022)
 1. [Double BAM! StatQuest with Josh Starmer](https://www.youtube.com/@statquest)
 1. [Python: Creating Virtual Environments](https://packaging.python.org/en/latest/tutorials/installing-packages/#creating-virtual-environments)
-1. [Pymac: Command line tool to install and manage Python.org Mac 
-   installations](https://discuss.python.org/t/pymac-command-line-tool-to-install-and-manage-python-org-mac-installations/14742)
+1. [Pymac: Command line tool to install and manage Python.org Mac installations](https://discuss.python.org/t/pymac-command-line-tool-to-install-and-manage-python-org-mac-installations/14742)
 1. [Everything I Know: R with Python and Jupyter Notebook](https://jonathansoma.com/everything/setup/use-r-python-jupyter/)
-1. Source
-   of [life_expectancy_data.csv](https://gist.github.com/aishwarya8615/89d9f36fc014dea62487f7347864d16a#file-life_expectancy_data-csv)
+1. Source of [life_expectancy_data.csv](https://gist.github.com/aishwarya8615/89d9f36fc014dea62487f7347864d16a#file-life_expectancy_data-csv)
+
+## Appendix
+
+### Add additional python kernels
+
+```shell
+~ % pip3 install -U ipykernel
+~ % python3 -m ipykernel install --user --name=python311 --display-name="Python 3.11 (System)"
+
+Installed kernelspec python311 in /Users/marksusol/Library/Jupyter/kernels/python311
+
+~ % jupyter kernelspec list
+
+Available kernels:
+  ir           /Users/marksusol/Library/Jupyter/kernels/ir
+  python311    /Users/marksusol/Library/Jupyter/kernels/python311
+  python3      /Library/Frameworks/Python.framework/Versions/3.11/share/jupyter/kernels/python3
+```
+
+```javscript
+{
+ "argv": [
+  "/Library/Frameworks/Python.framework/Versions/3.11/bin/python3",
+  "-m",
+  "ipykernel_launcher",
+  "-f",
+  "{connection_file}"
+ ],
+ "display_name": "python311",
+ "language": "python",
+ "metadata": {
+  "debugger": true
+ }
+}
+```
+
+### Customizations
+
+```shell
+% ipython --version
+8.18.1
+```
+
+```python
+from distutils.sysconfig import get_python_lib
+print(get_python_lib())
+
+'/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages'
+```
+
+#### Set tab space in Jupyter
+
+`vi /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/notebook/static/custom/custom.js`
+`vi ~/.jupyter/custom/custom.js`
+
+```javascript
+define(['base/js/namespace','base/js/events'], function(IPython, events) {
+  events.on('app_initialized.NotebookApp', function(){
+    // This sets the indentation within code cells
+    IPython.Cell.options_default.cm_config.indentUnit = 2
+  });
+});
+```
