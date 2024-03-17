@@ -203,30 +203,6 @@ $ sh jupyter_notebook.sh
 > ~ % jupyter_notebook.sh
 > ```
 
-### Automator (WIP)
-
-You can automate the running of this shell command using Apple's Automator.
-
-![automator-application](images/automator-application.png)
-
-> **TODO:** Figure out how to have Apple's Automator launch a shell scrip but
-> not use the Xtools paths for pip3/python3. See below how Jupyter is not 
-> correctly connected.
->
-> ```shell
-> ! which pip3
-> ! which python3
->
-> /usr/bin/pip3
-> /usr/bin/python3
->
-> !pip3 -V 
-> !python3 -V
->
-> pip 21.2.4 from /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/site-packages/pip (python 3.9)
-> Python 3.9.6
-> ```
-
 ### Spyder IDE
 
 The Scientific Python Development Environment | Spyder-IDE.org
