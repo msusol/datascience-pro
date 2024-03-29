@@ -109,6 +109,7 @@ tensorflow-io-gcs-filesystem==0.36.0
 tensorflow-metal==1.1.0
 termcolor==2.4.0
 terminado==0.18.1
+tf_keras==2.16.0
 tinycss2==1.2.1
 tornado==6.4
 traitlets==5.14.2
