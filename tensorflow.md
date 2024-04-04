@@ -445,13 +445,13 @@ with tf.device('/device:GPU:0'):
 ```
 
 ```zsh
+Visible Devices:  [PhysicalDevice(name='/physical_device:CPU:0', device_type='CPU'), PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
 2024-01-11 11:39:24.910238: I metal_plugin/src/device/metal_device.cc:1154] Metal device set to: Apple M3 Pro
 2024-01-11 11:39:24.910283: I metal_plugin/src/device/metal_device.cc:296] systemMemory: 18.00 GB
 2024-01-11 11:39:24.910292: I metal_plugin/src/device/metal_device.cc:313] maxCacheSize: 6.00 GB
 2024-01-11 11:39:24.910580: I tensorflow/core/common_runtime/pluggable_device/pluggable_device_factory.cc:306] Could not identify NUMA node of platform GPU ID 0, defaulting to 0. Your kernel may not have been built with NUMA support.
 2024-01-11 11:39:24.910803: I tensorflow/core/common_runtime/pluggable_device/pluggable_device_factory.cc:272] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 0 MB memory) -> physical PluggableDevice (device: 0, name: METAL, pci bus id: <undefined>)
 
-Visible Devices:  [PhysicalDevice(name='/physical_device:CPU:0', device_type='CPU'), PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
 391/391 [==============================] - 42s 96ms/step - loss: 4.5789 - accuracy: 0.0778
 ```
 
