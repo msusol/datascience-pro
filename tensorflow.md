@@ -359,6 +359,8 @@ See also:
 Check state before installing `hdf5`:
 
 ```python
+import tensorflow as tf
+
 for device in ['CPU', 'GPU']:
     print(tf.config.list_physical_devices(device))
 
@@ -407,115 +409,86 @@ numpy                         1.26.2
 # ~ % pip3 install -U "grpcio>=1.59.0,<2.0" "h5py>=3.10.0,<3.11" "numpy>=1.23.5,<2.0.0"
 ```
 
-#### Baseline
-
-TODO: goto colab and get basic model code/
-
-![tensorflow-gpu-activity](images/tensorflow-gpu-activity.png)
-
-### CPU (GPU Disabled)
+Now let's install Tensorflow from our `dist` files in this `venv`:
 
 ```zsh
-Visible Devices:  [PhysicalDevice(name='/physical_device:CPU:0', device_type='CPU')]
-Tensorflow: CPU
---Start: 1704996048.3641548 
-Epoch 1/5
-782/782 [==============================] - 354s 451ms/step - loss: 4.9483 - accuracy: 0.0655
-Epoch 2/5
-782/782 [==============================] - 353s 452ms/step - loss: 4.5328 - accuracy: 0.0771
-Epoch 3/5
-782/782 [==============================] - 350s 447ms/step - loss: 4.0170 - accuracy: 0.1108
-Epoch 4/5
-782/782 [==============================] - 356s 455ms/step - loss: 3.6376 - accuracy: 0.1660
-Epoch 5/5
-782/782 [==============================] - 351s 449ms/step - loss: 3.5074 - accuracy: 0.1963
---End: 1704997812.719677 
-CPU times: user 1h 25min 17s, sys: 12min 50s, total: 1h 38min 7s
-Wall time: 29min 24s
+(.venv-metal) % pip install --upgrade pip
+(.venv-metal) % cd dist
+(.venv-metal) dist % pip3 install tensorflow_io_gcs_filesystem-0.35.0-cp311-cp311-macosx_14_0_universal2.whl
+(.venv-metal) dist % pip3 install tensorflow-2.15.0-cp311-cp311-macosx_14_0_arm64.whl
+(.venv-metal) dist % pip3 install tensorflow_text-2.15.0-cp311-cp311-macosx_11_0_arm64.whl
 ```
 
-![tensorflow-cpu-only-activity](images/tensorflow-cpu-only-activity.png)
+Launch your colab instance now from this `.venv-metal` environment and run the following.
 
-### CPU (GPU Enabled)
+#### GPU
 
 ```python
-with tf.device('/device:CPU:0'):
-    model.fit(x_train, y_train, epochs=5, batch_size=64)
+import tensorflow as tf
+
+# Ensure we see the GPU in device list.
+print('Visible Devices: ', tf.config.get_visible_devices())
+
+cifar = tf.keras.datasets.cifar100
+(x_train, y_train), (x_test, y_test) = cifar.load_data()
+model = tf.keras.applications.ResNet50(
+  include_top=True,
+  weights=None,
+  input_shape=(32, 32, 3),
+  classes=100,)
+
+loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False)
+model.compile(optimizer="adam", loss=loss_fn, metrics=["accuracy"])
+
+with tf.device('/device:GPU:0'):
+  model.fit(x_train, y_train, epochs=1, batch_size=128)
 ```
 
 ```zsh
-Visible Devices:  [PhysicalDevice(name='/physical_device:CPU:0', device_type='CPU'), PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
-Tensorflow: CPU
--- Start: 1704998364.623704 
 2024-01-11 11:39:24.910238: I metal_plugin/src/device/metal_device.cc:1154] Metal device set to: Apple M3 Pro
 2024-01-11 11:39:24.910283: I metal_plugin/src/device/metal_device.cc:296] systemMemory: 18.00 GB
 2024-01-11 11:39:24.910292: I metal_plugin/src/device/metal_device.cc:313] maxCacheSize: 6.00 GB
 2024-01-11 11:39:24.910580: I tensorflow/core/common_runtime/pluggable_device/pluggable_device_factory.cc:306] Could not identify NUMA node of platform GPU ID 0, defaulting to 0. Your kernel may not have been built with NUMA support.
 2024-01-11 11:39:24.910803: I tensorflow/core/common_runtime/pluggable_device/pluggable_device_factory.cc:272] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 0 MB memory) -> physical PluggableDevice (device: 0, name: METAL, pci bus id: <undefined>)
-Epoch 1/5
-/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/keras/src/backend.py:5727: UserWarning: "`sparse_categorical_crossentropy` received `from_logits=True`, but the `output` argument was produced by a Softmax activation and thus does not represent logits. Was this intended?
-  output, from_logits = _get_logits(
-2024-01-11 11:39:27.136726: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:117] Plugin optimizer for device_type GPU is enabled.
-782/782 [==============================] - 410s 521ms/step - loss: 4.5420 - accuracy: 0.0922
-Epoch 2/5
-782/782 [==============================] - 405s 517ms/step - loss: 3.8924 - accuracy: 0.1614
-Epoch 3/5
-782/782 [==============================] - 404s 517ms/step - loss: 3.6944 - accuracy: 0.1880
-Epoch 4/5
-782/782 [==============================] - 408s 522ms/step - loss: 4.2501 - accuracy: 0.0776
-Epoch 5/5
-782/782 [==============================] - 406s 519ms/step - loss: 3.6689 - accuracy: 0.1646
---End: 1705000398.2893922
-CPU times: user 1h 25min 53s, sys: 19min 9s, total: 1h 45min 2s
-Wall time: 33min 53s
+
+Visible Devices:  [PhysicalDevice(name='/physical_device:CPU:0', device_type='CPU'), PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+391/391 [==============================] - 42s 96ms/step - loss: 4.5789 - accuracy: 0.0778
 ```
 
-### GPU
+![tensorflow-cpu-gpu-activity](images/tensorflow-gpu-activity.png)
+
+GPU evaluation process available in a Jupyter notebook: [TensorFlowMetal](https://colab.research.google.com/github/msusol/jupyter-notebook-on-macos/blob/main/notebooks/TensorFlow215.ipynb)
+
+#### CPU
+
+Now let us specifically remove the `GPU` from visible devices to test `CPU` only.
 
 ```python
-with tf.device('/device:GPU:0'):
-    model.fit(x_train, y_train, epochs=5, batch_size=64)
+import tensorflow as tf
+# Removes GPU from list, i.e. []
+tf.config.set_visible_devices([], 'GPU')
+print('Visible Devices: ', tf.config.get_visible_devices())
+
+cifar = tf.keras.datasets.cifar100
+(x_train, y_train), (x_test, y_test) = cifar.load_data()
+model = tf.keras.applications.ResNet50(
+  include_top=True,
+  weights=None,
+  input_shape=(32, 32, 3),
+  classes=100,)
+
+loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False)
+model.compile(optimizer="adam", loss=loss_fn, metrics=["accuracy"])
+
+with tf.device('/device:CPU:0'):
+  model.fit(x_train, y_train, epochs=1, batch_size=128)
 ```
 
 ```zsh
-Visible Devices:  [PhysicalDevice(name='/physical_device:CPU:0', device_type='CPU'), PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
-Tensorflow: GPU
--- Start: 1705000398.3098922
-Epoch 1/5
-782/782 [==============================] - 46s 56ms/step - loss: 4.8281 - accuracy: 0.0703
-Epoch 2/5
-782/782 [==============================] - 44s 56ms/step - loss: 4.1110 - accuracy: 0.1082
-Epoch 3/5
-782/782 [==============================] - 43s 55ms/step - loss: 3.6865 - accuracy: 0.1665
-Epoch 4/5
-782/782 [==============================] - 43s 55ms/step - loss: 3.7007 - accuracy: 0.1773
-Epoch 5/5
-782/782 [==============================] - 43s 55ms/step - loss: 3.3461 - accuracy: 0.2196
---End: 1705000619.002486
-CPU times: user 3min 33s, sys: 43.2 s, total: 4min 16s
-Wall time: 3min 40s
+Visible Devices:  [PhysicalDevice(name='/physical_device:CPU:0', device_type='CPU')]
+391/391 [==============================] - 393s 1s/step - loss: 4.6609 - accuracy: 0.0720
+CPU times: user 17min 44s, sys: 2min 35s, total: 20min 19s
+Wall time: 6min 34s
 ```
 
-![tensorflow-cpu-gpu-activity](images/tensorflow-cpu-gpu-activity.png)
-
-> NOTE: Explanation of `%%time` output.
->
-> ```zsh
-> CPU times: user 5.69 ms, sys: 118 µs, total: 5.81 ms
-> Wall time: 304 ms
-> ```
->
-> The `wall time` means that a clock hanging on a wall outside the computer
-> would measure 304 ms from the time the code was submitted to the CPU to 
-> the time when the process completed.
->
-> The `user` time and `sys` time both refer to time taken by the CPU to 
-> actually work on the code. The CPU time dedicated to our code is only a
-> fraction of the wall time as the CPU swaps its attention from our code to
-> other processes that are running on the system.
->
-> The `user` time is the amount of CPU time taken outside the kernel. The
-> `sys` time is the amount of time taken inside the kernel. The `total` CPU
-> time is `user` time + `sys` time.
-
-GPU evaluation process available in a Jupyter notebook: [TensorFlowMetal](https://colab.research.google.com/github/msusol/jupyter-notebook-on-macos/blob/main/notebooks/TensorFlow215.ipynb)
+![tensorflow-cpu-only-activity](images/tensorflow-cpu-activity.png)
