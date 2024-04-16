@@ -1,4 +1,4 @@
-# Jupyter Notebook on MacBook Pro
+# Data Science Pro
 
 Having had to repeat the process of firing up a new python dev station on a new
 Macbook Pro, thought I'd put the instructions out there for others to follow.
